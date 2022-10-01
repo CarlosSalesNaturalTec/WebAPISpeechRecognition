@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconhecimento de Fala - Web Audio API</title>
+</head>
+
+<body>
+
+    <div id="output"></div>
+
+    <button id="botao" type="button" onclick="startStop();">Iniciar</button>
+
+    <script>
+
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = false;
+        recognition.lang = "pt-BR";
+        var status = "stop";
+
+        recognition.onstart = function (e) {
+            let mensagem = "Reconhecimento de fala INICIADO"  ;
+            document.getElementById('output').innerHTML += mensagem + "</br>";
+        };
+
+        recognition.onsoundstart = function (e) {
+            let mensagem = "Som detectado!" ;
+            document.getElementById('output').innerHTML += mensagem + "</br>";
+        };
+
+        recognition.onresult = function (e) {
+            console.log('onresult', e);            
+            var resultIndex = e.resultIndex
+            var mensagem = "Frase detectada: " + e.results[resultIndex][0].transcript
+            document.getElementById('output').innerHTML += mensagem + "</br>";
+        };
+
+        recognition.onspeechend = function (e) {
+            let mensagem = "Speech End" ;
+            document.getElementById('output').innerHTML += mensagem + "</br>";
+        };
+
+        recognition.onerror = function (e) {
+            console.log('onresult', e);            
+            let mensagem = "Erro detectado: " + e.error;
+            document.getElementById('output').innerHTML += mensagem + "</br>";
+        };
+
+        recognition.onend = function (e) {
+            let mensagem = "Reconhecimento de fala ENCERRADO!";
+            document.getElementById('output').innerHTML += mensagem + "</br></br>";
+        };
+
+        function startStop() {
+            if (status == "stop") {
+                recognition.start();
+                status = "start";
+                document.getElementById("botao").innerHTML = "Parar";
+            } else {
+                recognition.stop();
+                status = "stop";
+                document.getElementById("botao").innerHTML = "Iniciar";
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
