@@ -78,6 +78,7 @@
         recognition.onend = function (e) {
             let mensagem = "Reconhecimento de fala ENCERRADO!";
             exibirmensagem(mensagem);
+            startStop();
             falar(mensagem);
         };
 
