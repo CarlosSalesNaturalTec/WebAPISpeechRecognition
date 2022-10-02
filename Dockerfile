@@ -3,7 +3,6 @@ COPY package.json .
 COPY package-lock.json .
 COPY index.js .
 COPY index.html .
-COPY script.js .
 COPY favicon.ico .
 RUN npm install
 EXPOSE 8080
